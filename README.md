@@ -1,4 +1,4 @@
 # drawing_face
 
-## main folder
+## model-jihoon folder
 acc : 91.67 - without editing description  
