@@ -1,4 +1,4 @@
 .DS_Store
 sms*
 __pycache__/
-
+*.swp
