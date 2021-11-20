@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+  <meta charset="utf-8">
+    <title>잘 그려줘!</title>
+    <style>
+      * {
+        font-size: 16px;
+        font-family: Consolas, sans-serif;
+      }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+  </head>
+  <body>
+    
+    <section class="imagesection">
+        <h1>잘 그려줘!</h1>
+        <h2>2021-2 상명대학교 자연어처리</h2>
+        <p> {% if data %}
+            <img class="image" id="imgId" src="{{ url_for('static', filename='images/default2.png')}}" alt="My Image">
+            {% else %}
+            <img class="image" id="imgId" src="{{ url_for('static', filename='images/default.png')}}" alt="My Image">
+            {% endif %}
+        </p>
+        <form action="./text_input" method="post">
+            <p><textarea input type="text" id="desc" name="desc" required placeholder="묘사를 입력해주세요."></textarea></p>
+            <p><input type="submit" value="Submit"></p>
+            {% if data %}
+            <a href="/">Back home</a>
+            {% endif %}
+        </form>
+    </section>
+  </body>
+</html>
