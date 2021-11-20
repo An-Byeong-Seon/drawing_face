@@ -1,6 +1,5 @@
 from torchtext import data
 
-
 class DataLoader(object):
     '''
     Data loader class to load text file using torchtext library.
@@ -72,6 +71,7 @@ class DataLoader(object):
         self.label.build_vocab(train)
         self.text.build_vocab(train, max_size=max_vocab, min_freq=min_freq)
 
+
 class PredDataLoader(object):
     '''
     Data loader class to load text file using torchtext library.
@@ -84,7 +84,7 @@ class PredDataLoader(object):
         max_vocab=999999,
         min_freq=1,
         use_eos=False,
-        shuffle=True
+        shuffle=False
     ):
         '''
         DataLoader initialization.
@@ -123,7 +123,7 @@ class PredDataLoader(object):
                 ('label', self.label),
                 ('text', self.text),
             ],
-        ).split()
+        )
 
         # Those loaded dataset would be feeded into each iterator:
         # train iterator and valid iterator.

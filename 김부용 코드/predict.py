@@ -67,7 +67,7 @@ def predict(weight_path, text):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     f = open(text, "w")
-    f.write("\0"+text)
+    f.write("0/t"+text)
     f.close()
 
     loaders = PredDataLoader(

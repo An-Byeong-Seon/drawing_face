@@ -7,8 +7,8 @@ from face_maker import face_maker
 app = Flask(__name__)
 
 # naver translation
-naver_api_id = 'k78Y1KgZUNHXRkkM_VzF' # 개발자센터에서 발급받은 Client ID 값
-naver_api_secret = 'WgmJw72QSr' # 개발자센터에서 발급받은 Client Secret 값
+naver_api_id = '' # 개발자센터에서 발급받은 Client ID 값
+naver_api_secret = '' # 개발자센터에서 발급받은 Client Secret 값
 
 @app.route('/')
 def index():
