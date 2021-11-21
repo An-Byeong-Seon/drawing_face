@@ -51,8 +51,12 @@ def face_maker(e_shape_pred = 1, f_shape_pred = 1, h_curl_pred = 1,
 
     bg = Image.open(bg_path)
 
-    back_hair_mask = Image.open(back_hair_mask_path + ".png")
-    back_hair = Image.open(back_hair_path + ".png")
+    if h_length_pred !="민머리":
+        back_hair_mask = Image.open(back_hair_mask_path + ".png")
+        back_hair = Image.open(back_hair_path + ".png")
+    
+        h_bang_mask = Image.open(h_bang_mask_path + ".png")
+        h_bang = Image.open(h_bang_path + ".png")
 
     neck_mask = Image.open(neck_mask_path + ".png")
     neck = Image.open(neck_path + ".png")
@@ -68,12 +72,11 @@ def face_maker(e_shape_pred = 1, f_shape_pred = 1, h_curl_pred = 1,
     e_shape2 = Image.open(e_shape_path2 + ".png")
     e_shape3 = Image.open(e_shape_path3 + ".png")
 
-    h_bang_mask = Image.open(h_bang_mask_path + ".png")
-    h_bang = Image.open(h_bang_path + ".png")
+    if h_length_pred !="민머리":
+        face_components = [bg, back_hair_mask, back_hair, neck_mask, neck, f_shape_mask, f_shape, f_shape2, nose, e_shape, e_shape2, h_bang_mask, h_bang]
+    else:
+        face_components = [bg, neck_mask, neck, f_shape_mask, f_shape, f_shape2, nose, e_shape, e_shape2]
 
-
-    face_components = [bg, back_hair_mask, back_hair, neck_mask, neck, f_shape_mask, f_shape, f_shape2, nose, e_shape, e_shape2, h_bang_mask, h_bang]
-    
     if sex_pred == "남자":
         face_components.append(neck2)
     else:

@@ -71,7 +71,7 @@ def predict(weight_path, text):
     f.close()
 
     loaders = PredDataLoader(
-            train_fn=text,
+            train_fn='testdata/test',
             batch_size=BATCH_SIZE,
             max_vocab=999999, # 크게
             min_freq=5, # 문장의 최소 단어 개수

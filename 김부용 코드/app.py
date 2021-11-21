@@ -37,24 +37,33 @@ def text_input():
         targetLang = 'en'
         #model_id = 'en-ko' # ibm 번역에서 사용, 영어->한국어
         en_text = nt.naver_translation(input_text, sourceLang, targetLang, naver_api_id, naver_api_secret) # 번역된 검색어
+        e_shape_pred = 1
+        f_shape_pred = 1
+        h_curl_pred = 1
+        h_bang_pred = 1
+        h_length_pred = 1
+        nose_pred = 1
+        sex_pred = 1
+    
     
     else:
         en_text = input_text
+        e_shape_pred = 0
+        f_shape_pred = 0
+        h_curl_pred = 0
+        h_bang_pred = 0
+        h_length_pred = 0
+        nose_pred = 0
+        sex_pred = 0
         
     #predict(en_text)
-    e_shape_pred = 1
-    f_shape_pred = 1
-    h_curl_pred = 1
-    h_bang_pred = 1
-    h_length_pred = 1
-    nose_pred = 1
-    sex_pred = 1
-    
+
+    result = ''.join(str(_) for _ in [e_shape_pred, f_shape_pred, h_curl_pred, h_bang_pred, h_length_pred, nose_pred, sex_pred])
+
     face_maker(e_shape_pred, f_shape_pred, h_curl_pred,
                 h_bang_pred, h_length_pred, nose_pred, sex_pred)
 
-    text = "작성하신 글을 바탕으로 생성한 캐릭터입니다."
-    return render_template('index.html', data=text)
+    return render_template('index.html', data=result)
 
 if __name__ == '__main__':
     app.run()

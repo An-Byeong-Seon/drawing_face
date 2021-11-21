@@ -1,7 +1,18 @@
 <!doctype html>
 <html lang="ko">
   <head>
-  <meta charset="utf-8">
+    <meta charset="utf-8">
+    <!-- 1990년 이후 이 페이지의 캐시를 만료시킴. -->
+    <meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT" />
+
+    <!-- 캐시를 바로 만료시킴. -->
+    <meta http-equiv="Expires" content="-1" />
+
+    <!-- 페이지 로드시마다 페이지를 캐싱하지 않음. (HTTP 1.0) -->
+    <meta http-equiv="Pragma" content="no-cache" />
+
+    <!-- 페이지 로드시마다 페이지를 캐싱하지 않음. (HTTP 1.1) -->
+    <meta http-equiv="Cache-Control" content="no-cache" />
     <title>잘 그려줘!</title>
     <style>
       * {
@@ -14,13 +25,14 @@
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
     crossorigin="anonymous"></script>
   </head>
+
   <body>
     
     <section class="imagesection">
         <h1>잘 그려줘!</h1>
         <h2>2021-2 상명대학교 자연어처리</h2>
         <p> {% if data %}
-            <img class="image" id="imgId" src="{{ url_for('static', filename='images/default2.png')}}" alt="My Image">
+            <img class="image" id="imgId" src="static/images/default2.png?{{data}}" alt="My Image">
             {% else %}
             <img class="image" id="imgId" src="{{ url_for('static', filename='images/default.png')}}" alt="My Image">
             {% endif %}
