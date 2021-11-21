@@ -78,7 +78,8 @@ def face_maker(e_shape_pred = 1, f_shape_pred = 1, h_curl_pred = 1,
         face_components = [bg, neck_mask, neck, f_shape_mask, f_shape, f_shape2, nose, e_shape, e_shape2]
 
     if sex_pred == "남자":
-        face_components.append(neck2)
+        if f_shape != "긴얼굴":
+            face_components.append(neck2)
     else:
         face_components.append(e_shape3)
 
