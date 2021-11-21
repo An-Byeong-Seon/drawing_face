@@ -88,4 +88,4 @@ def face_maker(e_shape_pred = 1, f_shape_pred = 1, h_curl_pred = 1,
         canvas.paste(c, (0, 0), c)
 
     canvas = canvas.resize((300, 322), Image.LANCZOS)
-    canvas.save(root + "default2.png")
+    canvas.save(root + "face.png")

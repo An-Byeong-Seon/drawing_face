@@ -32,7 +32,7 @@
         <h1>잘 그려줘!</h1>
         <h2>2021-2 상명대학교 자연어처리</h2>
         <p> {% if data %}
-            <img class="image" id="imgId" src="static/images/default2.png?{{data}}" alt="My Image">
+            <img class="image" id="imgId" src="static/images/face.png?{{data}}" alt="My Image">
             {% else %}
             <img class="image" id="imgId" src="{{ url_for('static', filename='images/default.png')}}" alt="My Image">
             {% endif %}
