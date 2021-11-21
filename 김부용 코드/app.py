@@ -32,7 +32,7 @@ def text_input():
             k = True
             break
 
-    if k == True:
+    if k == True: # 데이터를 영어로 학습시켰으므로 한국어가 입력되면 번역해야 함
         sourceLang = 'ko'
         targetLang = 'en'
 
@@ -46,7 +46,7 @@ def text_input():
         sex_pred = 1
     
     
-    else:
+    else: # 한국어가 포함되지 않는 경우
         en_text = input_text
         e_shape_pred = 0
         f_shape_pred = 0
