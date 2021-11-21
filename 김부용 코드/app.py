@@ -17,7 +17,7 @@ def index():
 @app.route('/text_input', methods=['POST'])
 def text_input():
 
-    input_text = request.form['desc'] # 한국어 검색어
+    input_text = request.form['desc'] # 한국어 묘사글
 
     if len(input_text)<1:
         return '묘사를 입력해주십시오.' + '<a href="/">Back home</a>'
@@ -35,8 +35,8 @@ def text_input():
     if k == True:
         sourceLang = 'ko'
         targetLang = 'en'
-        #model_id = 'en-ko' # ibm 번역에서 사용, 영어->한국어
-        en_text = nt.naver_translation(input_text, sourceLang, targetLang, naver_api_id, naver_api_secret) # 번역된 검색어
+
+        en_text = nt.naver_translation(input_text, sourceLang, targetLang, naver_api_id, naver_api_secret) # 번역된 영어 텍스트
         e_shape_pred = 1
         f_shape_pred = 1
         h_curl_pred = 1
