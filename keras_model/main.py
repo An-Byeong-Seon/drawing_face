@@ -69,8 +69,6 @@ with open('word.pickle','wb') as f:
 with open('label.pickle','wb') as f:
     pickle.dump(label_dict, f)
 
-
-
 input_dim = 100
 embedding_vecor_length = 256
 
