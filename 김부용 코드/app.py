@@ -81,13 +81,16 @@ def text_input():
             h_bang_pred = lv
 
 
+    # predict X
     e_shape_pred = 1
-    # f_shape_pred = predict('./nets/rnn_weight_f_shape.pkl', fn, vocab_size)
-    # h_curl_pred = predict('./nets/rnn_weight_h_curl.pkl', fn, vocab_size)
-    # h_bang_pred = predict('./nets/rnn_weight_h_bang.pkl', fn, vocab_size)
     h_length_pred = 1
     nose_pred = 1
-    # sex_pred = predict('./nets/rnn_weight_sex.pkl', fn, vocab_size)
+    
+    # predict
+    f_shape_pred = 0
+    h_curl_pred = 0
+    h_bang_pred = 0
+    sex_pred = 0
 
     result = ''.join(str(_) for _ in [e_shape_pred, f_shape_pred, h_curl_pred, h_bang_pred, h_length_pred, nose_pred, sex_pred])
 
