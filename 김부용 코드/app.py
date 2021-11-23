@@ -76,8 +76,12 @@ def text_input():
 
 
     s1 = en_text.split('.')
-
+    
     for s in s1:
+        # except - split
+        if len(s) < 3:
+            continue
+
         _key = predict(s)[0]
         key = _key[:-1]
         lv = int(_key[-1])
@@ -98,10 +102,10 @@ def text_input():
     print("f_shape_pred {} / h_curl_pred {} / h_bang_pred {} / sex_pred {}".format(f_shape_pred, h_curl_pred, h_bang_pred, sex_pred))
 
 
-    # test
+    # test - input
     '''
     He has long bangs.She has round face.He is middle-aged white man.He has brown short hair, and it's curly.
-
+    She has long bangs.She has long face.She is middle-aged white woman.She has brown short hair, and it's curly.
     '''
     result = ''.join(str(_) for _ in [e_shape_pred, f_shape_pred, h_curl_pred, h_bang_pred, h_length_pred, nose_pred, sex_pred])
 
