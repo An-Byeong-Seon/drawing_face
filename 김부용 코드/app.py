@@ -63,23 +63,6 @@ def text_input():
     nose_label = {0: "오똑한코", 1: "납작한코"}
     sex_label = {0: "여자", 1: "남자"}
     '''
-    s1 = en_text.split('.')
-
-    for s in s1:
-        _key = predict(s)[0]
-        key = _key[:-1]
-        lv = int(_key[-1])
-
-        if key == 's':
-            sex_pred = lv
-        elif key == 'fs':
-            f_shape_pred = lv
-        elif key == 'hc':
-            h_curl_pred = lv
-        elif key == 'hb':
-            h_bang_pred = lv
-
-
     # predict X
     e_shape_pred = 1
     h_length_pred = 1
@@ -90,6 +73,30 @@ def text_input():
     h_curl_pred = 0
     h_bang_pred = 0
     sex_pred = 0
+
+
+    s1 = en_text.split('.')
+
+    for s in s1:
+        _key = predict(s)[0]
+        key = _key[:-1]
+        lv = int(_key[-1])
+
+        if key == 's':
+            sex_pred = lv
+            print("sex_pred : ", _key)
+        elif key == 'fs':
+            f_shape_pred = lv
+            print("f_shape_pred : ", _key)
+        elif key == 'hc':
+            h_curl_pred = lv
+            print("h_curl_pred : ", _key)
+        elif key == 'hb':
+            h_bang_pred = lv
+            print("h_bang_pred : ", _key)
+
+    print("f_shape_pred {} / h_curl_pred {} / h_bang_pred {} / sex_pred {}".format(f_shape_pred, h_curl_pred, h_bang_pred, sex_pred))
+
 
     # test
     '''
