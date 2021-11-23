@@ -23,6 +23,9 @@ if len(tmp) != max_len:
         tmp.append(0)
     
 test_input = np.append(test_input, np.array([tmp]), axis=0)
-np.argmax(model.predict(test_input))
+
+
+print("predict : ", [k for k, v in label_dict.items() if v == np.argmax(model.predict(test_input))])
+
 
 
