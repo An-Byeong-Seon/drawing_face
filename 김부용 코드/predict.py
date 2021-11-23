@@ -1,9 +1,9 @@
-import argparse
-
-import numpy as np
 import torch
 import torch.nn as nn
 from data_loader import DataLoader # data_loader.py
+
+from face_maker import face_maker
+from datetime import datetime
 
 WORD_VEC_SIZE = 256
 HIDDEN_SIZE = 512
@@ -56,27 +56,19 @@ class RNN(nn.Module):
         
         return out
 
-def predict(weight_path, text, fn):
+def predict(weight_path, file_name, vocab_size):
 
     # Device configuration
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    fn = "./descriptions/"+fn+".tsv"
-
-    f = open(fn, "w", encoding="utf-8")
-    f.write("-\t"+text)
-    f.close()
-
     
     loaders = DataLoader(
-        train_fn=fn,
+        train_fn=file_name,
         batch_size=1,
         valid_ratio=.01, # val 안 나눈다. 0은 안 받으므로 0.01
         max_vocab=999999,
         min_freq=5,
     )
-
-    vocab_size = len(text.replace(".", " ").split(" "))
 
     feature = weight_path.split("weight_")[1].split('.')[0]
     classes = {"h_length": 4, "h_bang": 3, "h_curl": 3, "e_shape": 4, "f_shape": 4, "sex": 2, "nose": 2}
@@ -97,11 +89,35 @@ def predict(weight_path, text, fn):
             # Forward prop.
             output = model(texts) # (batch_size, num_classes)
             _, output_index = torch.max(output, 1)
-            prediction  = output_index[0]
+            prediction  = int(output_index[0])
 
             break
             
     return prediction
 
 if __name__ == "__main__":
-    print(predict('./nets/rnn_weight_sex.pkl', "He is middle aged who looks like late 50s. He has black thick hard angled eyebrows. He has deep set eyes with double eyelids. He has very dark brown color iris. He has winkle around his eyes and forehead. He has skin tones of small full lips. He has medium sized refined nose. His face shape is triangle, and he has M-shaped forehead. His skin color is golden natural. He has short gray color hair. He has gray color of the short, boxed bread beard mark. He has long and narrow ears. He looks like he's wearing a blue hat.", str(2)))
+
+    en_text = "He is a Western child. His skin is bright and red dots are visible on his right cheek. He has big ears. His face is round-shaped. He has square wide forehead and short dark blonde curly hair. He has double outer eyelids and thin, light brown eyebrows. And he has big round eyes with gray-green pupils. He has a broad nose tip and low, short and small nose. Nostrils are more than half visible. He is smiling broadly and appears 8 white upper and lower teeth. He has a small mouth and thin and deep red lips."
+
+    fn = "./descriptions/"+datetime.now().strftime('%Y%m%d%H%M%S')+".tsv"
+
+    f = open(fn, "w", encoding="utf-8")
+    f.write("-\t"+en_text)
+    f.close()
+
+
+    vocab_size = len(en_text.replace(".", " ").split(" "))
+
+    e_shape_pred = predict('./nets/rnn_weight_e_shape.pkl', fn, vocab_size)
+    f_shape_pred = predict('./nets/rnn_weight_f_shape.pkl', fn, vocab_size)
+    h_curl_pred = predict('./nets/rnn_weight_h_curl.pkl', fn, vocab_size)
+    h_bang_pred = predict('./nets/rnn_weight_h_bang.pkl', fn, vocab_size)
+    h_length_pred = predict('./nets/rnn_weight_h_length.pkl', fn, vocab_size)
+    nose_pred = predict('./nets/rnn_weight_nose.pkl', fn, vocab_size)
+    sex_pred = predict('./nets/rnn_weight_sex.pkl', fn, vocab_size)
+
+    result = ''.join(str(_) for _ in [e_shape_pred, f_shape_pred, h_curl_pred, h_bang_pred, h_length_pred, nose_pred, sex_pred])
+
+    print(result)
+    face_maker(e_shape_pred, f_shape_pred, h_curl_pred,
+                h_bang_pred, h_length_pred, nose_pred, sex_pred)
