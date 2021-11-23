@@ -92,6 +92,11 @@ def text_input():
     h_bang_pred = 0
     sex_pred = 0
 
+    # test
+    '''
+    He has long bangs.She has round face.He is middle-aged white man.He has brown short hair, and it's curly.
+
+    '''
     result = ''.join(str(_) for _ in [e_shape_pred, f_shape_pred, h_curl_pred, h_bang_pred, h_length_pred, nose_pred, sex_pred])
 
     face_maker(e_shape_pred, f_shape_pred, h_curl_pred,
