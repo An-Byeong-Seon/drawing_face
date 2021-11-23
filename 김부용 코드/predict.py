@@ -56,12 +56,12 @@ class RNN(nn.Module):
         
         return out
 
-def predict(weight_path, text):
+def predict(weight_path, text, fn):
 
     # Device configuration
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    fn = "./descriptions/"+text.replace(" ", "_")+"tsv"
+    fn = "./descriptions/"+fn+".tsv"
 
     f = open(fn, "w", encoding="utf-8")
     f.write("-\t"+text)
@@ -96,11 +96,12 @@ def predict(weight_path, text):
             
             # Forward prop.
             output = model(texts) # (batch_size, num_classes)
-            prediction  = np.argmax(output[0].detach().numpy())
+            _, output_index = torch.max(output, 1)
+            prediction  = output_index[0]
 
             break
             
     return prediction
 
 if __name__ == "__main__":
-    print(predict('./nets/rnn_weight_sex.pkl', "He is a boy."))
+    print(predict('./nets/rnn_weight_sex.pkl', "He is middle aged who looks like late 50s. He has black thick hard angled eyebrows. He has deep set eyes with double eyelids. He has very dark brown color iris. He has winkle around his eyes and forehead. He has skin tones of small full lips. He has medium sized refined nose. His face shape is triangle, and he has M-shaped forehead. His skin color is golden natural. He has short gray color hair. He has gray color of the short, boxed bread beard mark. He has long and narrow ears. He looks like he's wearing a blue hat.", str(2)))
