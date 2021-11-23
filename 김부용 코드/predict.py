@@ -1,8 +1,9 @@
 import argparse
 
+import numpy as np
 import torch
 import torch.nn as nn
-from data_loader import PredDataLoader # data_loader.py
+from data_loader import DataLoader # data_loader.py
 
 WORD_VEC_SIZE = 256
 HIDDEN_SIZE = 512
@@ -57,26 +58,31 @@ class RNN(nn.Module):
 
 def predict(weight_path, text):
 
+    # Device configuration
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    fn = "./descriptions/"+text.replace(" ", "_")+"tsv"
+
+    f = open(fn, "w", encoding="utf-8")
+    f.write("-\t"+text)
+    f.close()
+
+    
+    loaders = DataLoader(
+        train_fn=fn,
+        batch_size=1,
+        valid_ratio=.01, # val 안 나눈다. 0은 안 받으므로 0.01
+        max_vocab=999999,
+        min_freq=5,
+    )
+
     vocab_size = len(text.replace(".", " ").split(" "))
 
     feature = weight_path.split("weight_")[1].split('.')[0]
     classes = {"h_length": 4, "h_bang": 3, "h_curl": 3, "e_shape": 4, "f_shape": 4, "sex": 2, "nose": 2}
     num_classes = classes[feature]
 
-    # Device configuration
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    f = open(text, "w")
-    f.write("0/t"+text)
-    f.close()
-
-    loaders = PredDataLoader(
-            train_fn='testdata/test',
-            batch_size=BATCH_SIZE,
-            max_vocab=999999, # 크게
-            min_freq=5, # 문장의 최소 단어 개수
-        )
-    
     model = RNN(input_size=vocab_size,
             word_vec_size=WORD_VEC_SIZE,
             hidden_size=HIDDEN_SIZE,
@@ -85,13 +91,16 @@ def predict(weight_path, text):
 
     model = torch.load(weight_path, map_location=device)
 
-    for _, data in enumerate(loaders.valid_loader): # batch_size만큼
+    for _, data in enumerate(loaders.train_loader): # batch_size만큼
             texts = data.text.to(device) # (batch_size, length)
-
+            
             # Forward prop.
             output = model(texts) # (batch_size, num_classes)
+            prediction  = np.argmax(output[0].detach().numpy())
+
+            break
             
-    return output
+    return prediction
 
 if __name__ == "__main__":
-    print(predict('./nets/rnn_weight_sex.pkl', "she is a cute girl."))
+    print(predict('./nets/rnn_weight_sex.pkl', "He is a boy."))
