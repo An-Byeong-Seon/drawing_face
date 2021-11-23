@@ -64,9 +64,9 @@ train_y = train_y.astype('int32')
 train_x = train_x.astype('int32')
 
 # save dict
-with open('./data/word.pickle','wb') as f:
+with open('word.pickle','wb') as f:
     pickle.dump(dictionary_word, f)
-with open('./data/label.pickle','wb') as f:
+with open('label.pickle','wb') as f:
     pickle.dump(label_dict, f)
 
 # hyperparameter
@@ -90,4 +90,4 @@ scores = model.evaluate(train_x, train_y, verbose=0)
 print("ACC : ", (scores[1]*100))
 
 # save model
-model.save("./data/draw_model")
+model.save("draw_model")

@@ -46,21 +46,48 @@ def text_input():
     else: # 한국어가 포함되지 않는 경우
         en_text = input_text
     
-    fn = "./descriptions/"+datetime.now().strftime('%Y%m%d%H%M%S')+".tsv"
+    # fn = "./descriptions/"+datetime.now().strftime('%Y%m%d%H%M%S')+".tsv"
 
-    f = open(fn, "w", encoding="utf-8")
-    f.write("-\t"+en_text)
-    f.close()
+    # f = open(fn, "w", encoding="utf-8")
+    # f.write("-\t"+en_text)
+    # f.close()
 
-    vocab_size = len(en_text.replace(".", " ").split(" "))
+    # vocab_size = len(en_text.replace(".", " ").split(" "))
+    
+    # {'TEST': -1, 's1': 0, 'fs0': 1, 'hc2': 2, 'hc0': 3, 'fs2': 4, 'hb0': 5, 'hc1': 6, 'fs1': 7, 'hb1': 8, 's0': 9, 'hb2': 10, 'fs3': 11}
+    '''
+    e_shape_label = {0: "올라간눈매", 1:"쳐진눈매", 2:"중간눈매", 3:"안경"}
+    f_shape_label = {0: "긴얼굴", 1: "둥근", 2: "각진", 3: "역삼각"}
+    h_curl_label = {0: "직모", 1: "반곱슬", 2: "곱슬"}
+    h_bang_label = {0: "앞머리없음", 1: "뱅", 2: "일반앞머리"}
+    h_length_label = {0: "민머리", 1: "스포츠머리", 2: "단발", 3:"장발"}
+    nose_label = {0: "오똑한코", 1: "납작한코"}
+    sex_label = {0: "여자", 1: "남자"}
+    '''
+    s1 = en_text.split('.')
 
-    e_shape_pred = predict('./nets/rnn_weight_e_shape.pkl', fn, vocab_size)
-    f_shape_pred = predict('./nets/rnn_weight_f_shape.pkl', fn, vocab_size)
-    h_curl_pred = predict('./nets/rnn_weight_h_curl.pkl', fn, vocab_size)
-    h_bang_pred = predict('./nets/rnn_weight_h_bang.pkl', fn, vocab_size)
-    h_length_pred = predict('./nets/rnn_weight_h_length.pkl', fn, vocab_size)
-    nose_pred = predict('./nets/rnn_weight_nose.pkl', fn, vocab_size)
-    sex_pred = predict('./nets/rnn_weight_sex.pkl', fn, vocab_size)
+    for s in s1:
+        _key = predict(s)
+        key = _key[:-1]
+        lv = int(_key[-1])
+
+        if key == 's':
+            sex_pred = lv
+        elif key == 'fs':
+            f_shape_pred = lv
+        elif key == 'hc':
+            h_curl_pred = lv
+        elif key == 'hb':
+            h_bang_pred = lv
+
+
+    e_shape_pred = 1
+    # f_shape_pred = predict('./nets/rnn_weight_f_shape.pkl', fn, vocab_size)
+    # h_curl_pred = predict('./nets/rnn_weight_h_curl.pkl', fn, vocab_size)
+    # h_bang_pred = predict('./nets/rnn_weight_h_bang.pkl', fn, vocab_size)
+    h_length_pred = 1
+    nose_pred = 1
+    # sex_pred = predict('./nets/rnn_weight_sex.pkl', fn, vocab_size)
 
     result = ''.join(str(_) for _ in [e_shape_pred, f_shape_pred, h_curl_pred, h_bang_pred, h_length_pred, nose_pred, sex_pred])
 
