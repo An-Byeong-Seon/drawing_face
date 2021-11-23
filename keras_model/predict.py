@@ -1,6 +1,7 @@
 from nltk.tokenize import word_tokenize
 import nltk
 import pickle
+import tensorflow as tf
 
 with open('word.pickle', 'rb') as f:
     dictionary_word = pickle.load(f)
@@ -24,7 +25,7 @@ if len(tmp) != max_len:
     
 test_input = np.append(test_input, np.array([tmp]), axis=0)
 
-
+model = tf.keras.models.load_model("my_model")
 print("predict : ", [k for k, v in label_dict.items() if v == np.argmax(model.predict(test_input))])
 
 
