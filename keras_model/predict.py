@@ -5,9 +5,9 @@ import tensorflow as tf
 import numpy as np
 import sys
 
-with open('word.pickle', 'rb') as f:
+with open('./data/word.pickle', 'rb') as f:
     dictionary_word = pickle.load(f)
-with open('label.pickle', 'rb') as f:
+with open('./data/label.pickle', 'rb') as f:
     label_dict = pickle.load(f)
 max_len = 16
 
@@ -30,7 +30,7 @@ if len(tmp) != max_len:
     
 test_input = np.append(test_input, np.array([tmp]), axis=0)
 
-model = tf.keras.models.load_model("draw_model")
+model = tf.keras.models.load_model("./data/draw_model")
 print("predict : ", [k for k, v in label_dict.items() if v == np.argmax(model.predict(test_input))])
 
 

@@ -63,16 +63,17 @@ for i in range(dataset.shape[0]):
 train_y = train_y.astype('int32')
 train_x = train_x.astype('int32')
 
-
-with open('word.pickle','wb') as f:
+# save dict
+with open('./data/word.pickle','wb') as f:
     pickle.dump(dictionary_word, f)
-with open('label.pickle','wb') as f:
+with open('./data/label.pickle','wb') as f:
     pickle.dump(label_dict, f)
 
+# hyperparameter
 input_dim = 100
 embedding_vecor_length = 256
 
-
+# model init
 model = Sequential()
 model.add(Embedding(input_dim, embedding_vecor_length, input_length=max_len))
 model.add(Bidirectional(LSTM(256, dropout=0.2, recurrent_dropout=0.2)))
@@ -81,9 +82,12 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
+# train
 model.fit(train_x, train_y, epochs=100, batch_size=64)
 
+# calc acc
 scores = model.evaluate(train_x, train_y, verbose=0)
 print("ACC : ", (scores[1]*100))
 
-model.save("draw_model")
+# save model
+model.save("./data/draw_model")
