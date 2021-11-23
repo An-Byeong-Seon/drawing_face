@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 from datetime import datetime
 
 from predict import predict
-from predict import RNN
 
 import naver_translate as nt
 from face_maker import face_maker
@@ -67,7 +66,7 @@ def text_input():
     s1 = en_text.split('.')
 
     for s in s1:
-        _key = predict(s)
+        _key = predict(s)[0]
         key = _key[:-1]
         lv = int(_key[-1])
 

@@ -48,6 +48,7 @@ def predict(inputs):
     # print("predict : ", [k for k, v in label_dict.items() if v == np.argmax(model.predict(test_input))])
 
 if __name__ == "__main__":
-    key = predict("She has no bangs")
+    key = predict("She has no bangs")[0]
+    print("key : ", key)
     print("1 : ", key[:-1])
     print("2 : ", key[-1])
