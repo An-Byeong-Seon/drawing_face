@@ -7,9 +7,9 @@ import sys
 
 def predict(inputs):
     # load dict
-    with open('word.pickle', 'rb') as f:
+    with open('word_hair.pickle', 'rb') as f:
         dictionary_word = pickle.load(f)
-    with open('label.pickle', 'rb') as f:
+    with open('label_hair.pickle', 'rb') as f:
         label_dict = pickle.load(f)
 
     # hardcoding
@@ -39,7 +39,7 @@ def predict(inputs):
     test_input = np.append(test_input, np.array([tmp]), axis=0)
 
     # load model
-    model = tf.keras.models.load_model("draw_model")
+    model = tf.keras.models.load_model("draw_model_hair")
 
     # predict key
     return [k for k, v in label_dict.items() if v == np.argmax(model.predict(test_input))]

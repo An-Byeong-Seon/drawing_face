@@ -12,7 +12,7 @@ import pickle
 
 nltk.download('punkt')
 
-dataset = pd.read_csv('./data/draw.train.tsv', delimiter='\t')
+dataset = pd.read_csv('./data/draw.train_real_withHair.tsv', delimiter='\t')
 
 # make word dictionary
 dictionary_word = {"TEST" : -1}
@@ -54,6 +54,7 @@ for i in range(dataset.shape[0]):
     except:
         label_dict[s] = label_dict[max(label_dict, key=label_dict.get)] + 1
 
+
 # setting - label
 train_y = np.array([])
 for i in range(dataset.shape[0]):
@@ -64,9 +65,9 @@ train_y = train_y.astype('int32')
 train_x = train_x.astype('int32')
 
 # save dict
-with open('word.pickle','wb') as f:
+with open('word_hair.pickle','wb') as f:
     pickle.dump(dictionary_word, f)
-with open('label.pickle','wb') as f:
+with open('label_hair.pickle','wb') as f:
     pickle.dump(label_dict, f)
 
 # hyperparameter
@@ -77,7 +78,7 @@ embedding_vecor_length = 256
 model = Sequential()
 model.add(Embedding(input_dim, embedding_vecor_length, input_length=max_len))
 model.add(Bidirectional(LSTM(256, dropout=0.2, recurrent_dropout=0.2)))
-model.add(Dense(12, activation='softmax'))
+model.add(Dense(15, activation='softmax'))
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
@@ -90,4 +91,4 @@ scores = model.evaluate(train_x, train_y, verbose=0)
 print("ACC : ", (scores[1]*100))
 
 # save model
-model.save("draw_model")
+model.save("draw_model_hair")
