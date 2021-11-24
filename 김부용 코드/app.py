@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from datetime import datetime
-
+import random
 from predict import predict
 
 import naver_translate as nt
@@ -64,9 +64,9 @@ def text_input():
     sex_label = {0: "여자", 1: "남자"}
     '''
     # predict X
-    e_shape_pred = 1
-    h_length_pred = 1
-    nose_pred = 1
+    e_shape_pred = random.randrange(0,4)
+    h_length_pred = random.randrange(0,4) # predict - editing
+    nose_pred = random.randrange(0,2)
     
     # predict
     f_shape_pred = 0
