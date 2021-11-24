@@ -68,7 +68,7 @@ def text_input():
     nose_pred = random.randrange(0,2)
     
     # predict
-    h_length_pred = random.randrange(0,4)
+    h_length_pred = random.randrange(0,4) # not good
     f_shape_pred = random.randrange(0,4)
     h_curl_pred = random.randrange(0,3)
     h_bang_pred = random.randrange(0,3)
@@ -85,22 +85,25 @@ def text_input():
         _key = predict(s)[0]
         key = _key[:-1]
         lv = int(_key[-1])
-
+        print(s)
         if key == 's':
             sex_pred = lv
             print("sex_pred : ", _key)
         elif key == 'fs':
             f_shape_pred = lv
             print("f_shape_pred : ", _key)
-        elif key == 'hc':
-            h_curl_pred = lv
-            print("h_curl_pred : ", _key)
-        elif key == 'hb':
-            h_bang_pred = lv
-            print("h_bang_pred : ", _key)
         elif key == 'hl':
             h_length_pred = lv
             print("h_length_pred : ", _key)
+        elif key == 'hb':
+            h_bang_pred = lv
+            if lv == 1:
+                h_length_pred = random.randrange(1,3)
+            print("h_bang_pred : ", _key)
+            print("h_length_pred : ", h_length_pred)
+        elif key == 'hc':
+            h_curl_pred = lv
+            print("h_curl_pred : ", _key)
 
     print("f_shape_pred {} / h_curl_pred {} / h_bang_pred {} / sex_pred {} / h_length_pred {}".format(f_shape_pred, h_curl_pred, h_bang_pred, sex_pred, h_length_pred))
 
